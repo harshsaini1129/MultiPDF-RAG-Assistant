@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    HI
+  </head>
+
+  <style>
+    .pdf {
+      width: 100%;
+      aspect-ratio: 4/3;
+    }
+
+    .pdf,
+    html,
+    body {
+      height: 100%;
+    }
+    h1,
+    h3 {
+      text-align: center;
+    }
+    h1 {
+      color: navy;
+    }
+    .site-footer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 28px;
+      margin-top: 12px;
+    }
+
+    .disclaimer {
+      color: #111;
+      opacity: 0.95;
+      font-family: monospace;
+      font-size: 14px;
+      text-align: center;
+      width: 90%;
+      max-width: 48rem;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        opacity 220ms ease,
+        background-color 220ms ease;
+      will-change: transform, box-shadow;
+    }
+
+    .disclaimer:hover,
+    .site-footer:hover .disclaimer {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.04);
+      cursor: default;
+    }
+  </style>
+
+  <body>
+    <h1>Zep Analytics</h1>
+    <h3>Embedding the PDF</h3>
+    <p>
+      Member States shall take all necessary steps toensure that during official
+      testing of cosmeticproducts : — determination of dichloromethane and
+      1,1,1­trichloroethane, — identification and determination of quinolin­
+      8-ol and bis(8-hydroxyquinolinium) sulphate, — determination of ammonia, —
+      identification and determination of nitro­ methane, — identification and
+      determination of mercapto­ acetic acid in hair-waving, hair-straightening
+      and depilatory products, — identification and determination of hexachloro­
+      phene (INN),
+    </p>
+    <embed
+      class="pdf"
+      src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+      width="800"
+      height="400"
+    />
+    <footer class="site-footer">
+      <p class="disclaimer">
+        This is an independent academic project and is not
+        officially affiliated with or endorsed by Tata Consultancy Services
+        (TCS).
+      </p>
+    </footer>
+  </body>
+</html>

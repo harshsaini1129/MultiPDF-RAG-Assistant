@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Interface</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #3e0d81;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      section {
+        width: 100%;
+      }
+
+      div {
+        width: 100%;
+      }
+
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+
+      .logo {
+        height: 80px;
+        width: 80px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      .title {
+        font-size: 48px;
+        padding: 8px;
+        font-weight: bold;
+        color: white;
+        text-decoration: underline;
+        text-decoration-style: double;
+        filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+        margin-bottom: 20px;
+      }
+
+      .content-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 32px 16px;
+      }
+
+      .chat-box {
+        padding-bottom: 8px;
+        width: 100%;
+        border: 2px solid #f97316;
+        margin: 0 20px;
+      }
+
+      @media (min-width: 640px) {
+        .chat-box {
+          width: 50rem;
+          margin: 0;
+        }
+      }
+
+      .chat-header {
+        width: 100%;
+        padding: 8px 12px;
+        background: linear-gradient(to bottom right, #fb923c, #f97316, #f97316);
+        font-weight: bold;
+        color: white;
+      }
+
+      .chat-history {
+        padding: 16px 12px;
+        list-style: none;
+      }
+
+      .chat-message {
+        filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+        margin: 8px 0;
+        background-color: #fed7aa;
+        padding: 12px 16px;
+        border-radius: 6px;
+        color: #475569;
+        font-weight: 600;
+        font-family: monospace;
+        font-size: 14px;
+        overflow: hidden;
+      }
+
+      @media (min-width: 640px) {
+        .chat-message {
+          overflow: visible;
+          font-size: 16px;
+        }
+      }
+
+      .no-chat-history {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .no-chat-text {
+        border: 2px solid #f97316;
+        color: white;
+        padding: 8px 12px;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        font-family: monospace;
+      }
+
+      .form-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .chat-input {
+        background-color: #fed7aa;
+        width: 100%;
+        margin: 0 16px;
+        padding: 8px 16px;
+        border-radius: 16px;
+        color: black;
+        font-family: monospace;
+        border: 2px solid black;
+      }
+
+      .chat-input:focus {
+        outline: none;
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .submit-button {
+        padding: 8px 28px;
+        margin: 0 8px;
+        border-radius: 16px;
+        background: linear-gradient(to bottom right, #fcd34d, #f97316, #b45309);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          opacity 180ms ease;
+        will-change: transform, box-shadow;
+      }
+
+      .submit-button:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        opacity: 0.98;
+      }
+
+      .submit-button:active {
+        transform: translateY(1px) scale(0.995);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      .submit-button.loading {
+        pointer-events: none;
+        opacity: 0.85;
+      }
+
+      /* ripple element */
+      .submit-button .ripple-ink {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        background: rgba(255, 255, 255, 0.35);
+        animation: ripple 600ms linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple {
+        to {
+          transform: scale(6);
+          opacity: 0;
+        }
+      }
+
+      .title span img {
+        display: none;
+      }
+      .site-footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 12px 0 28px;
+        margin-top: 12px;
+      }
+
+      .disclaimer {
+        color: #fff;
+        opacity: 0.95;
+        font-family: monospace;
+        font-size: 14px;
+        text-align: center;
+        width: 90%;
+        max-width: 50rem;
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition:
+          transform 220ms ease,
+          box-shadow 220ms ease,
+          opacity 220ms ease,
+          background-color 220ms ease;
+        will-change: transform, box-shadow;
+      }
+
+      .disclaimer:hover,
+      .site-footer:hover .disclaimer {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.04);
+        cursor: default;
+      }
+      .error-alert {
+        background: linear-gradient(90deg, #fecaca, #fee2e2);
+        color: #7f1d1d;
+        border: 1px solid #fca5a5;
+        padding: 12px 16px;
+        margin: 12px 16px;
+        border-radius: 8px;
+        font-family: monospace;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <div>
+        <div class="main-container">
+          <img
+            src="{{ url_for('static', filename='bot.webp') }}"
+            class="logo"
+            alt="Assistant avatar"
+          />
+          <h1 class="title">
+            <span><img src="" alt="" /></span> Chat Interface
+          </h1>
+          <div class="content-wrapper">
+            <div class="chat-box">
+              <h1 class="chat-header">Ask a question</h1>
+              {% if error_message %}
+              <div class="error-alert">{{ error_message }}</div>
+              {% endif %} {% if chat_history %}
+              <ul class="chat-history">
+                {% for message in chat_history %}
+                <li class="chat-message">{{ message }}</li>
+
+                {% endfor %}
+              </ul>
+              {% else %}
+              <div class="no-chat-history">
+                <p class="no-chat-text">No chat history yet.</p>
+              </div>
+              {% endif %}
+              <form action="/chat" method="post">
+                <div class="form-container">
+                  <input
+                    class="chat-input"
+                    placeholder=""
+                    type="text"
+                    name="question"
+                    id="question"
+                    required
+                  />
+                  <button class="submit-button ripple" type="submit">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="site-footer">
+        <p class="disclaimer">
+          Disclaimer: This is an independent academic project and is not
+          officially affiliated with or endorsed by Tata Consultancy Services
+          (TCS).
+        </p>
+      </footer>
+    </section>
+    <script>
+      // Ripple + loading helper for buttons
+      (function () {
+        function createRipple(ev, btn) {
+          const rect = btn.getBoundingClientRect();
+          const ink = document.createElement("span");
+          ink.className = "ripple-ink";
+          const size = Math.max(rect.width, rect.height);
+          ink.style.width = ink.style.height = size + "px";
+          const x = ev.clientX - rect.left - size / 2;
+          const y = ev.clientY - rect.top - size / 2;
+          ink.style.left = x + "px";
+          ink.style.top = y + "px";
+          btn.appendChild(ink);
+          setTimeout(() => ink.remove(), 700);
+        }
+
+        document.querySelectorAll(".ripple").forEach((btn) => {
+          btn.addEventListener("click", function (ev) {
+            createRipple(ev, btn);
+          });
+        });
+
+        // mark form submit buttons as loading to prevent double submits
+        document.querySelectorAll("form").forEach((form) => {
+          form.addEventListener("submit", function (ev) {
+            const btn = form.querySelector(".submit-button");
+            if (btn) {
+              btn.classList.add("loading");
+              btn.textContent = "Sending...";
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

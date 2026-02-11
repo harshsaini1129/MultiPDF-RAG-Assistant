@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Chat</title>
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      .main-wrapper {
+          position: relative;
+          overflow: hidden;
+          background-color: #3E0D81;
+      }
+
+      .content-container {
+          margin: 0 auto;
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 0 24px 96px 24px;
+          padding-top: 40px;
+      }
+
+      @media (min-width: 640px) {
+          .content-container {
+              height: 100vh;
+              flex-direction: row;
+              padding-bottom: 128px;
+              padding-left: 20px;
+              padding-right: 20px;
+              padding-top: 80px;
+          }
+      }
+
+      @media (min-width: 1024px) {
+          .content-container {
+              padding-left: 80px;
+              padding-right: 80px;
+              padding-top: 80px;
+          }
+      }
+
+      .left-section {
+          margin: 0 auto;
+          max-width: 42rem;
+          flex-shrink-0;
+          padding-top: 32px;
+      }
+
+      @media (min-width: 1024px) {
+          .left-section {
+              margin: 0;
+              max-width: 40rem;
+              flex-shrink-0;
+              padding-top: 32px;
+          }
+      }
+
+      .logo-img {
+          height: 80px;
+          width: 80px;
+          border-radius: 12px;
+          object-fit: cover;
+      }
+
+      .badge-wrapper {
+          margin-top: 96px;
+          display: inline-flex;
+          gap: 24px;
+      }
+
+      @media (min-width: 640px) {
+          .badge-wrapper {
+              margin-top: 128px;
+          }
+      }
+
+      @media (min-width: 1024px) {
+          .badge-wrapper {
+              margin-top: 16px;
+          }
+      }
+
+      .badge {
+          margin-left: 16px;
+          border-radius: 9999px;
+          background: linear-gradient(to bottom right, #fcd34d, #f97316, #b45309);
+          padding: 6px 12px;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 24px;
+          color: white;
+          border: 1px solid rgba(59, 130, 246, 0.1);
+      }
+
+      .arrow-icon {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 8px;
+          color: #4b5563;
+      }
+
+      .arrow-svg {
+          height: 20px;
+          width: 20px;
+          color: #9ca3af;
+      }
+
+      .main-title {
+          margin-left: 16px;
+          margin-top: 40px;
+          font-size: 36px;
+          font-weight: bold;
+          letter-spacing: -0.02em;
+          color: white;
+      }
+
+      @media (min-width: 640px) {
+          .main-title {
+              font-size: 56px;
+          }
+      }
+
+      .description {
+          margin-left: 16px;
+          margin-top: 24px;
+          font-size: 18px;
+          line-height: 32px;
+          color: #d1d5db;
+      }
+
+      .form-wrapper {
+          margin-top: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          gap: 24px;
+      }
+
+      @media (min-width: 640px) {
+          .form-wrapper {
+              flex-direction: row;
+              align-items: center;
+          }
+      }
+
+        .chat-button {
+          margin-left: 16px;
+          margin-bottom: 8px;
+          background: linear-gradient(to bottom right, #fcd34d, #f97316, #b45309);
+          padding: 0 32px;
+          border-radius: 16px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          font-size: 14px;
+          font-weight: 600;
+          color: white;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+          border: none;
+          cursor: pointer;
+          transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .chat-button:hover {
+          transform: translateY(-6px) scale(1.03);
+          box-shadow: 0 18px 36px rgba(0,0,0,0.16);
+        }
+
+        .chat-button:active {
+          transform: translateY(1px) scale(0.995);
+        }
+
+        .chat-button .ripple-ink {
+          position: absolute;
+          border-radius: 50%;
+          transform: scale(0);
+          background: rgba(255,255,255,0.38);
+          animation: ripple 600ms linear;
+          pointer-events: none;
+        }
+
+      .right-section {
+          margin: 0 auto;
+          margin-top: 64px;
+          display: flex;
+          max-width: 42rem;
+          align-items: center;
+          justify-content: center;
+      }
+
+      @media (min-width: 640px) {
+          .right-section {
+              margin-top: 96px;
+          }
+      }
+
+      @media (min-width: 1024px) {
+          .right-section {
+              margin-left: 40px;
+              margin-right: 0;
+              margin-top: 0;
+              max-width: none;
+              flex: 1;
+          }
+      }
+
+      .image-wrapper {
+          max-width: 48rem;
+          flex: 1;
+      }
+
+      @media (min-width: 640px) {
+          .image-wrapper {
+              max-width: 80rem;
+          }
+      }
+
+      .screenshot {
+          width: 66.66%;
+          padding-left: 48px;
+      }
+
+      @media (min-width: 640px) {
+          .screenshot {
+              width: 23rem;
+              height: 23rem;
+              padding-left: 0;
+          }
+      }
+
+      @media (min-width: 1024px) {
+          .screenshot {
+              padding: 0;
+          }
+      }
+
+      .screenshot-rounded {
+          border-radius: 6px;
+          filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+      }
+        .site-footer {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding: 12px 0 28px;
+          margin-top: 12px;
+        }
+
+        .disclaimer {
+          color: #fff;
+          opacity: 0.95;
+          font-family: monospace;
+          font-size: 14px;
+          text-align: center;
+          width: 90%;
+          max-width: 50rem;
+          display: inline-block;
+          padding: 8px 12px;
+          border-radius: 8px;
+          transition: transform 220ms ease, box-shadow 220ms ease, opacity 220ms ease, background-color 220ms ease;
+          will-change: transform, box-shadow;
+        }
+
+        .disclaimer:hover,
+        .site-footer:hover .disclaimer {
+          transform: translateY(-6px) scale(1.02);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.04);
+          cursor: default;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="main-wrapper">
+      <div class="content-container">
+        <div class="left-section">
+          <img
+            src="{{ url_for('static', filename='bot.webp') }}"
+            class="logo-img"
+            alt="Assistant avatar"
+          />
+          <div class="badge-wrapper">
+            <a
+              href="#"
+              style="text-decoration: none; display: inline-flex; gap: 24px"
+            >
+              <span class="badge"> GPT LangChain</span>
+              <span class="arrow-icon">
+                <svg
+                  class="arrow-svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+          <h1 class="main-title">
+            Chat with Enterprise Documents Using AI Technology
+          </h1>
+          <p class="description">
+            Interact intelligently with PDFs and documents using an AI-powered
+            conversational interface. Designed for enterprise use cases, this
+            solution enables seamless document understanding, knowledge
+            retrieval, and collaboration—aligned with TCS’s digital
+            transformation and innovation goals.
+          </p>
+          <form action="/chat" method="get" enctype="multipart/form-data">
+            <div class="form-wrapper">
+              <button type="submit" class="chat-button ripple">Chat</button>
+            </div>
+          </form>
+        </div>
+        <div class="right-section">
+          <div class="image-wrapper">
+            <img
+              src="https://res.cloudinary.com/dtsuvx8dz/image/upload/v1718821848/rtz89yphc2hscnjhn4q6.png"
+              alt="App screenshot"
+              class="screenshot screenshot-rounded"
+            />
+          </div>
+        </div>
+      </div>
+      <footer class="site-footer">
+        <p class="disclaimer">
+          This is an independent academic project and is not officially
+          affiliated with or endorsed by Tata Consultancy Services (TCS).
+        </p>
+      </footer>
+    </div>
+    <script>
+      (function () {
+        function createRipple(ev, btn) {
+          const rect = btn.getBoundingClientRect();
+          const ink = document.createElement("span");
+          ink.className = "ripple-ink";
+          const size = Math.max(rect.width, rect.height);
+          ink.style.width = ink.style.height = size + "px";
+          const x = ev.clientX - rect.left - size / 2;
+          const y = ev.clientY - rect.top - size / 2;
+          ink.style.left = x + "px";
+          ink.style.top = y + "px";
+          btn.appendChild(ink);
+          setTimeout(() => ink.remove(), 700);
+        }
+
+        document.querySelectorAll(".ripple").forEach((btn) => {
+          btn.addEventListener("click", function (ev) {
+            createRipple(ev, btn);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        section {
+            width: 100%;
+        }
+
+        .white-bg {
+            background-color: white;
+        }
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, rgba(229, 231, 235, 0.5), transparent);
+        }
+
+        .hero-container {
+            margin: 0 auto;
+            max-width: 80rem;
+            padding-bottom: 96px;
+            padding-top: 40px;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+                padding: 160px 32px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .hero-container {
+                padding-bottom: 128px;
+            }
+        }
+
+        .left-content {
+            padding: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .left-content {
+                padding-left: 0;
+                padding-top: 16px;
+            }
+        }
+
+        .max-content {
+            max-width: 42rem;
+        }
+
+        .logo-section {
+            max-width: 32rem;
+        }
+
+        .header-badge {
+            margin-top: 96px;
+        }
+
+        @media (min-width: 640px) {
+            .header-badge {
+                margin-top: 128px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-badge {
+                margin-top: 64px;
+            }
+        }
+
+        .badge-link {
+            display: inline-flex;
+            gap: 24px;
+            text-decoration: none;
+        }
+
+        .company-logo {
+            height: 44px;
+            width: 44px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .badge-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            line-height: 24px;
+            color: #4b5563;
+            font-family: monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-name {
+            font-weight: 600;
+        }
+
+        .badge-title {
+            color: transparent;
+            background: linear-gradient(to top, #f87171, #d946ef, #6366f1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            font-weight: bold;
+        }
+
+        .badge-icon {
+            height: 20px;
+            width: 20px;
+            color: #9ca3af;
+        }
+
+        .main-heading {
+            margin-top: 40px;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: -0.02em;
+            color: #111827;
+        }
+
+        @media (min-width: 640px) {
+            .main-heading {
+                font-size: 48px;
+            }
+        }
+
+        .description-text {
+            margin-top: 24px;
+            font-size: 18px;
+            line-height: 32px;
+            color: #4b5563;
+        }
+
+        .image-section {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .image-section {
+                margin-top: 256px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .image-section {
+                margin: 0 auto;
+                max-width: 42rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .image-section {
+                margin-top: 0;
+            }
+        }
+
+        .image-container {
+            max-width: 48rem;
+            flex: 1;
+        }
+
+        @media (min-width: 640px) {
+            .image-container {
+                max-width: 80rem;
+            }
+        }
+
+        .feature-image {
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+        }
+
+        .ring-border {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: 96px;
+            pointer-events: none;
+        }
+
+        @media (min-width: 768px) {
+            .ring-border {
+                border-radius: 48px;
+            }
+        }
+
+        .features-section {
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.05), transparent);
+            padding: 48px 0;
+        }
+
+        .features-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 100%;
+            gap: 20px;
+            padding: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            padding-top: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature-item {
+            padding: 16px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 28px;
+            color: transparent;
+            background: linear-gradient(to top left, #f87171, #d946ef, #6366f1);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .feature-subtitle {
+            margin-top: 4px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #4b5563;
+        }
+
+        .feature-image-small {
+            width: 300px;
+            height: 300px;
+        }
+
+        .form-section {
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .form-section {
+                border-radius: 12px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .form-section {
+                grid-column: span 2;
+            }
+        }
+
+        .form-content {
+            padding: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .form-content {
+                padding: 32px;
+            }
+        }
+
+        .form-grid {
+            display: grid;
+            max-width: 42rem;
+        }
+
+        .form-group {
+            grid-column: span 1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 32px;
+            color: #111827;
+        }
+
+        .form-input {
+            margin-top: 8px;
+            padding-left: 8px;
+            display: block;
+            width: 100%;
+            border-radius: 6px;
+            border: 0;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            color: #111827;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1d5db;
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-input:focus {
+            border: 1px solid #2563eb;
+            outline: none;
+        }
+
+        .form-footer {
+            display: flex;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 24px;
+            border-top: 1px solid #d1d5db;
+            width: 100px;
+            padding: 16px 32px;
+        }
+
+        .submit-button {
+            border-radius: 6px;
+            background: linear-gradient(to top right, #f87171, #d946ef, #6366f1);
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+            border: none;
+            cursor: pointer;
+            min-width: 140px;
+            transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+        }
+
+        .submit-button:active {
+            transform: translateY(1px) scale(0.995);
+        }
+
+        .submit-button.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .submit-button .ripple-ink {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            background: rgba(255,255,255,0.32);
+            animation: ripple 600ms linear;
+            pointer-events: none;
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.05), transparent);
+            padding: 8px 0;
+        }
+
+        .result-text {
+            background-color: white;
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+            width: 100%;
+            margin: 8px 0;
+            font-size: 12px;
+            padding: 8px;
+            text-align: justify;
+        }
+
+        @media (min-width: 640px) {
+            .result-text {
+                width: 66.66%;
+                font-size: 20px;
+                padding: 16px;
+            }
+        }
+
+        .pdf-container {
+            background-color: white;
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .pdf-container {
+                width: 66.66%;
+                font-size: 20px;
+                padding: 16px;
+            }
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 1000px;
+        }
+        .site-footer {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 12px 0 28px;
+            margin-top: 12px;
+        }
+
+        .disclaimer {
+            color: #374151;
+            opacity: 0.95;
+            font-family: monospace;
+            font-size: 14px;
+            text-align: center;
+            width: 90%;
+            max-width: 80rem;
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: transform 220ms ease, box-shadow 220ms ease, opacity 220ms ease, background-color 220ms ease;
+            will-change: transform, box-shadow;
+        }
+
+        .disclaimer:hover,
+        .site-footer:hover .disclaimer {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.04);
+            color: #111827;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="white-bg">
+            <div class="hero-section">
+                <div class="hero-container">
+                    <div class="left-content">
+                        <div class="max-content">
+                            <div class="logo-section">
+
+                                <div class="header-badge">
+                                    <a href="#" class="badge-link">
+                                        <img class="company-logo"
+                                            src="{{ url_for('static', filename='bot.webp') }}"
+                                            alt="Assistant avatar">
+                                        <span class="badge-text">
+                                            <span><span class="badge-name">CONCEPT4 </span>| <span
+                                                    class="badge-title">Multi Document Chatbot</span></span>
+                                            <svg class="badge-icon" viewBox="0 0 20 20" fill="currentColor"
+                                                aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                                <h1 class="main-heading">Converse with Ease: Your Multi-Document Chatbot Companion</h1>
+                                <p class="description-text">Unlock the power of conversational AI to effortlessly navigate through multiple documents. Simplify research, streamline information retrieval, and elevate productivity with our intuitive chatbot interface</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-section">
+                        <img src="https://res.cloudinary.com/dtsuvx8dz/image/upload/v1712987021/ghzgwi4mxevqrt0lxefw.png"
+                            class="feature-image" height="350" width="350" alt="">
+                        <div class="ring-border"
+                            aria-hidden="true"></div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <section class="features-section">
+        <div class="features-container">
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h2 class="feature-title">
+                        Multi Document Chatbot</h2>
+                    <p class="feature-subtitle">Please provide accurate information to Chatbot.</p>
+                    <img src="https://res.cloudinary.com/dtsuvx8dz/image/upload/v1712990769/rp7adpujhtdh6d7odlir.png"
+                        class="feature-image-small" width="300" height="300" alt="">
+                </div>
+
+                <form action="" method="post" class="form-section">
+                    <div class="form-content">
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="question" class="form-label">Ask a Question</label>
+                                <div style="margin-top: 8px;">
+                                    <input type="question" name="question"
+                                        class="form-input">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                        <div class="form-footer">
+
+                        <button type="submit" class="submit-button ripple">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="results-container">
+            <div class="result-text">
+                <p>
+                    {{result}}
+                </p>
+            </div>
+
+            <div class="pdf-container">
+
+                <embed class="pdf-embed" src={{source_document}}>
+
+            </div>
+
+
+
+        </div>
+
+
+        </section>
+
+        <footer class="site-footer">
+                <p class="disclaimer">Disclaimer: This is an independent academic project and is not officially affiliated with or endorsed by Tata Consultancy Services (TCS).</p>
+        </footer>
+
+        <script>
+            (function () {
+                function createRipple(ev, btn) {
+                    const rect = btn.getBoundingClientRect();
+                    const ink = document.createElement('span');
+                    ink.className = 'ripple-ink';
+                    const size = Math.max(rect.width, rect.height);
+                    ink.style.width = ink.style.height = size + 'px';
+                    const x = ev.clientX - rect.left - size / 2;
+                    const y = ev.clientY - rect.top - size / 2;
+                    ink.style.left = x + 'px';
+                    ink.style.top = y + 'px';
+                    btn.appendChild(ink);
+                    setTimeout(() => ink.remove(), 700);
+                }
+
+                document.querySelectorAll('.ripple').forEach((btn) => {
+                    btn.addEventListener('click', function (ev) {
+                        createRipple(ev, btn);
+                    });
+                });
+
+                document.querySelectorAll('form').forEach((form) => {
+                    form.addEventListener('submit', function (ev) {
+                        const btn = form.querySelector('.submit-button');
+                        if (btn) {
+                            btn.classList.add('loading');
+                            btn.textContent = 'Sending...';
+                        }
+                    });
+                });
+            })();
+        </script>
+
+</body>
+
+</html>
